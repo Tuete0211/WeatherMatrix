@@ -4,11 +4,11 @@
 
 //pin config
 #define BRIGHTNESS_PIN 4  //D2
-#define LED_PIN 5         //D1
+#define LED_PIN 1         //5         //D1
 //layout config
 #define MATRIX_WIDTH 10
 #define MATRIX_HEIGHT 10
-#define MATRIX_SPERPENTINE false
+#define MATRIX_SPERPENTINE true
 #define MATRIXVERTICAL false
 #define NUM_LEDS (MATRIX_WIDTH * MATRIX_HEIGHT)
 
@@ -25,77 +25,32 @@ CRGB* const leds(leds_plus_safety_pixel + 1);
    font: https://squaregear.net/fonts/tiny.html
 */
 struct {
+  // numbers
+  const unsigned int one[4][3] = { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 1, 0 }, { 1, 1, 1 } };
+  const unsigned int two[4][3] = { { 1, 1, 0 }, { 0, 0, 1 }, { 1, 0, 0 }, { 1, 1, 1 } };
+  const unsigned int three[4][3] = { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 0, 1 }, { 1, 1, 0 } };
+  const unsigned int four[4][3] = { { 0, 0, 1 }, { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 1 } };
+  const unsigned int five[4][3] = { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 1 }, { 1, 1, 0 } };
+  const unsigned int six[4][3] = { { 0, 1, 1 }, { 1, 0, 0 }, { 1, 1, 1 }, { 1, 1, 1 } };
+  const unsigned int seven[4][3] = { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 1, 0 }, { 1, 0, 0 } };
+  const unsigned int eight[4][3] = { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 1 }, { 0, 1, 0 } };
+  const unsigned int nine[4][3] = { { 0, 1, 1 }, { 1, 0, 1 }, { 1, 1, 1 }, { 0, 0, 1 } };
+  const unsigned int zero[4][3] = { { 0, 1, 0 }, { 1, 0, 1 }, { 1, 0, 1 }, { 0, 1, 0 } };
 
-  const unsigned int one[4][3] = {
-    { 0, 1, 0 },
-    { 1, 1, 0 },
-    { 0, 1, 0 },
-    { 1, 1, 1 }
+  const unsigned int wave[10][10] = {
+    { 0, 1, 2, 3, 4, 4, 3, 2, 1, 0 },
+    { 1, 2, 3, 4, 5, 5, 4, 3, 2, 1 },
+    { 2, 3, 4, 5, 6, 6, 5, 4, 3, 2 },
+    { 3, 4, 5, 6, 7, 7, 6, 5, 4, 3 },
+    { 4, 5, 6, 7, 8, 8, 7, 6, 5, 4 },
+    { 4, 5, 6, 7, 8, 8, 7, 6, 5, 4 },
+    { 3, 4, 5, 6, 7, 7, 6, 5, 4, 3 },
+    { 2, 3, 2, 5, 6, 6, 5, 4, 3, 2 },
+    { 1, 2, 3, 4, 5, 5, 4, 3, 2, 1 },
+    { 0, 1, 2, 3, 4, 4, 3, 2, 1, 0 }
   };
 
-  const unsigned int two[4][3] = {
-    { 1, 1, 0 },
-    { 0, 0, 1 },
-    { 1, 0, 0 },
-    { 1, 1, 1 }
-  };
-
-  const unsigned int three[4][3] = {
-    { 1, 1, 0 },
-    { 0, 1, 1 },
-    { 0, 0, 1 },
-    { 1, 1, 0 }
-  };
-
-  const unsigned int four[4][3] = {
-    { 0, 0, 1 },
-    { 1, 0, 1 },
-    { 1, 1, 1 },
-    { 0, 0, 1 }
-  };
-
-  const unsigned int five[4][3] = {
-    { 1, 1, 1 },
-    { 1, 0, 0 },
-    { 0, 0, 1 },
-    { 1, 1, 0 }
-  };
-
-  const unsigned int six[4][3] = {
-    { 0, 1, 1 },
-    { 1, 0, 0 },
-    { 1, 1, 1 },
-    { 1, 1, 1 }
-  };
-
-  const unsigned int seven[4][3] = {
-    { 1, 1, 1 },
-    { 0, 0, 1 },
-    { 0, 1, 0 },
-    { 1, 0, 0 }
-  };
-
-  const unsigned int eight[4][3] = {
-    { 0, 1, 0 },
-    { 1, 1, 1 },
-    { 1, 0, 1 },
-    { 0, 1, 0 }
-  };
-
-  const unsigned int nine[4][3] = {
-    { 0, 1, 1 },
-    { 1, 0, 1 },
-    { 1, 1, 1 },
-    { 0, 0, 1 }
-  };
-
-  const unsigned int zero[4][3] = {
-    { 0, 1, 0 },
-    { 1, 0, 1 },
-    { 1, 0, 1 },
-    { 0, 1, 0 }
-  };
-
+  // weather icons
   const unsigned int cloudy[10][10] = {
     { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
     { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
@@ -238,6 +193,59 @@ struct {
     { 0x000000, 0x000000, 0x000000, 0xfff200, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
     { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 }
   };
+
+  const unsigned int cold[10][10] = {
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x4b6aed, 0x4d6df3, 0x4d6df3, 0x4d6df3, 0x4d6df3, 0x4b6aed, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x020306, 0x4d6df3, 0x4d6df3, 0x4d6df3, 0x4d6df3, 0x020306, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x4d6df3, 0x4d6df3, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 }
+  };
+
+  const unsigned int hot[10][10] = {
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x060101, 0xed1c24, 0xed1c24, 0x060101, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0xe71b23, 0xed1c24, 0xed1c24, 0xe71b23, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 }
+  };
+
+  const unsigned int partly_sunny_showers[10][10] = {
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0xfff200, 0xfff200, 0xfff200, 0xfff200, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0xffffff, 0xffffff, 0xfff200, 0xfff200, 0xfff200, 0xfff200, 0x000000, 0x000000 },
+    { 0x060606, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xfff206, 0xfff206, 0x000000, 0x000000 },
+    { 0xf9f9f9, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xfffff9, 0xfffff9, 0x000000, 0x000000 },
+    { 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xfff200, 0x000000, 0x000000 },
+    { 0x000000, 0x2885c7, 0x000000, 0xfff200, 0x2885c7, 0xf9f006, 0x2885c7, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x2885c7, 0x000506, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 }
+  };
+
+  const unsigned int mostly_cloudy_showers[10][10] = {
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0xfff200, 0xb4b4b4, 0xb4b4b4, 0xfff200, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0xffffff, 0xffffff, 0xb4b4b4, 0xb4b4b4, 0xb4b4b4, 0xb4b4b4, 0x000000, 0x000000 },
+    { 0x060606, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xb6b6b6, 0xb6b6b6, 0xafafaf, 0x000000 },
+    { 0xf9f9f9, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xfdfdfd, 0xfdfdfd, 0x050505, 0x000000 },
+    { 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xfff200, 0x000000, 0x000000 },
+    { 0x000000, 0x2885c7, 0x000000, 0xfff200, 0x2885c7, 0xf9f006, 0x2885c7, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x2885c7, 0x000506, 0x000000, 0x000000, 0x000000, 0x000000 },
+    { 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000 }
+  };
+
 } iconStorage;
 
 /** icon ids
@@ -248,17 +256,15 @@ struct {
   [8]       dark_cloudy
   [11]      foggy
   [12]      showers
-  [15]      thunderstorm
+  [13]  mostly_cloudy_showers
+  [14]  partly_sunny_showers
+  [15-17]      thunderstorm
   [18,26]   rain
   [22-23,25] snowing
   [24]      ice
-
-  [13]  mostly_cloudy_showers
-  [14]  partly_sunny_showers
-  [16]  mostly_cloudy_tstorms
-  [17]  partly_sunny_tstorms
   [30]  hot
   [31]  cold
+
   [32]  windy
 */
 
@@ -299,6 +305,37 @@ public:
     FastLED.show();
   }
 
+  void fadeToBlack() {
+    for (int i = 0; i < 50; i++) {
+      fadeToBlackBy(leds, NUM_LEDS, 31);
+      delay(5);
+      FastLED.show();
+      delay(20);
+    }
+  }
+
+  void drawWave(const CRGB color, bool resetCounter = false) {
+    static int counter = 10;
+
+    if (resetCounter)
+      counter = 10;
+    //fade all
+    nscale8(leds, NUM_LEDS, 200);
+    //for(int i = 0; i < NUM_LEDS; i++) { leds[i].nscale8(200); }
+
+    // draw wave
+    for (int y = 0; y < 10; y++) {
+      for (int x = 0; x < 10; x++) {
+        if (iconStorage.wave[y][x] == counter)
+          leds[XY(x, y)] = color;
+      }
+    }
+    if (--counter <= -9)
+      counter = 10;
+    delay(5);
+    FastLED.show();
+  }
+
   // ledMatrix.drawIcon(&IconStorage::cloudy);
   void drawIcon(const unsigned int (*icon)[10][10], int daysFromNow) {
     clearMatrix();
@@ -308,16 +345,12 @@ public:
       case 0:
         leds[0] = CRGB(127, 127, 127);
         leds[1] = CRGB(127, 127, 127);
-        leds[2] = CRGB(127, 127, 127);
         break;
       case 1:
-        leds[3] = CRGB(127, 127, 127);
         leds[4] = CRGB(127, 127, 127);
         leds[5] = CRGB(127, 127, 127);
-        leds[6] = CRGB(127, 127, 127);
         break;
       case 2:
-        leds[7] = CRGB(127, 127, 127);
         leds[8] = CRGB(127, 127, 127);
         leds[9] = CRGB(127, 127, 127);
         break;
@@ -341,16 +374,12 @@ public:
       case 0:
         leds[0] = CRGB(127, 127, 127);
         leds[1] = CRGB(127, 127, 127);
-        leds[2] = CRGB(127, 127, 127);
         break;
       case 1:
-        leds[3] = CRGB(127, 127, 127);
         leds[4] = CRGB(127, 127, 127);
         leds[5] = CRGB(127, 127, 127);
-        leds[6] = CRGB(127, 127, 127);
         break;
       case 2:
-        leds[7] = CRGB(127, 127, 127);
         leds[8] = CRGB(127, 127, 127);
         leds[9] = CRGB(127, 127, 127);
         break;
@@ -423,6 +452,10 @@ private:
     if (x >= MATRIX_WIDTH) return -1;
     if (y >= MATRIX_HEIGHT) return -1;
     return XY(x, y);
+  }
+
+  void fadeall() {
+    for (int i = 0; i < NUM_LEDS; i++) { leds[i].nscale8(127); }
   }
 
   void placeNumber(int originX, int originY, int number, const CRGB color) {

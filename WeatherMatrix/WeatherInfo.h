@@ -18,8 +18,10 @@ struct forecast {  // -> change to struct
 class WeatherInfo {
 public:
   WeatherInfo() {
-    //wifiClient = WiFiClientSecure();
-    wifiClient.setInsecure();
+    requestWeatherData();
+  }
+
+  void updateWeatherData(){
     requestWeatherData();
   }
 
@@ -61,18 +63,26 @@ private:
         return;
       }
     } else {
-      //*/
-      // get data from server
-      Serial.println("\n##########\nGet Weather Data");
-      if (sender.begin(wifiClient, "https://dataservice.accuweather.com/forecasts/v1/daily/5day/170369?apikey=qvEnALdqsjWRvqVbpOoL7eBOxeGaUBAC&language=de-de&metric=true")) {
-        Serial.print("HttpClient started ");
-        int httpCode = sender.GET();
-        Serial.print("-> Request send ");
+
+      WiFiClient client;
+
+      HTTPClient http;
+
+      Serial.print("[HTTP] begin...\n");
+      if (http.begin(client, "http://dataservice.accuweather.com/forecasts/v1/daily/5day/170369?apikey=qvEnALdqsjWRvqVbpOoL7eBOxeGaUBAC&language=de-de&metric=true")) {  // HTTP
+
+        Serial.print("[HTTP] GET...\n");
+        // start connection and send HTTP header
+        int httpCode = http.GET();
+
+        // httpCode will be negative on error
         if (httpCode > 0) {
-          Serial.print("-> Response available ");
-          if (httpCode == 200) {
-            Serial.print("-> Good Response ");
-            String payload = sender.getString();
+          // HTTP header has been send and Server response header has been handled
+          Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+
+          // file found at server
+          if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+            String payload = http.getString();
             Serial.print("-> save to JSOn Object ");
             DeserializationError error = deserializeJson(weatherData, payload);
             if (error) {
@@ -80,18 +90,16 @@ private:
               Serial.print(error.c_str());
               return;
             }
-          } else {
-            // Falls HTTP-Error
-            Serial.print("-> Bad Response (HTTP Code): " + String(httpCode));
+            Serial.println(payload);
           }
+        } else {
+          Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
         }
-        sender.end();
-        Serial.println("\nAPI call executed");
 
+        http.end();
       } else {
-        Serial.println("HTTP-Verbindung konnte nicht hergestellt werden!");
+        Serial.printf("[HTTP} Unable to connect\n");
       }
-      //*/
     }
 
     // save necessary data for later use
@@ -130,12 +138,26 @@ private:
         case 12:
           f.iconReference = &iconStorage.showers;
           break;
+        case 13:
+          f.iconReference = &iconStorage.mostly_cloudy_showers;
+          break;
+        case 14:
+          f.iconReference = &iconStorage.partly_sunny_showers;
+          break;
         case 15:
+        case 16:
+        case 17:
           f.iconReference = &iconStorage.thunderstorm;
           break;
         case 18:
         case 26:
           f.iconReference = &iconStorage.rain;
+          break;
+        case 30:
+          f.iconReference = &iconStorage.hot;
+          break;
+        case 31:
+          f.iconReference = &iconStorage.cold;
           break;
         default:
           f.iconReference = &iconStorage.ice;
@@ -145,9 +167,6 @@ private:
     }
   }
 
-  HTTPClient sender;
-  WiFiClientSecure wifiClient;
-
   // forecasts
   forecast forecasts[3];
 };
@@ -156,3 +175,24 @@ private:
 #endif
 
 // END OF FILE
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
